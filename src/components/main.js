@@ -38,50 +38,6 @@ function MainPage(props){
         },duration);
     }
     useEffect(()=>{
-        // 车辆注册信息
-        socket.on("user",function(obj){
-            console.log("receive-user:"+JSON.stringify(obj));
-            // 有注册信息
-            if(obj.result){
-                obj = obj.data;
-                delay(()=>{
-                    setShowCarInfo(preVal=>{
-                        return {...preVal,...{
-                            name:obj.name,
-                            id:obj._id,
-                            integal:obj.integal,
-                            oilLabel:obj.oilLabel,
-                            invoice:obj.invoiceInfo||{}
-                        }}
-                    });
-                    notification.success({
-                        message:"信息提示",
-                        description:"车主注册信息查询成功!"
-                    });
-                },8000);
-            }else{
-                notification.warning({
-                    message:"信息提示",
-                    description:"车主未注册，请现场工作人员协助!"
-                });
-            }
-        });
-        // if(!_.isEmpty(showCarInfo)&&!_.isString(showCarInfo.name)){
-        //     delay(()=>{
-        //         setShowCarInfo(preVal=>{
-        //             return {...preVal,...{
-        //                 name:"李刚",
-        //                 id:"312762",
-        //                 integal:329,
-        //                 oilLabel:"95"
-        //             }}
-        //         });
-        //         notification.success({
-        //             message:"信息提示",
-        //             description:"车主注册信息查询成功!"
-        //         });
-        //     });
-        // }
         // 加油信息
         if(_.isString(showCarInfo.name)&&_.isEmpty(refuelInfo)){
             delay(()=>{
@@ -134,6 +90,13 @@ function MainPage(props){
                     }
                 });
             });
+            delay(()=>{
+                // 初始化清空数据
+                setShowCarInfo({});
+                setRefuelInfo({});
+                setTotalCost({});
+                setBillingInfo({});
+            },8000);
         }
     },[totalCost]);
     useEffect(()=>{
@@ -175,6 +138,34 @@ function MainPage(props){
                     description:"来车信息识别成功!"
                 });
             });
+        });
+        // 车主注册信息
+        socket.on("user",function(obj){
+            console.log("receive-user:"+JSON.stringify(obj));
+            // 有注册信息
+            if(obj.result){
+                obj = obj.data;
+                delay(()=>{
+                    setShowCarInfo(preVal=>{
+                        return {...preVal,...{
+                            name:obj.name,
+                            id:obj._id,
+                            integal:obj.integal,
+                            oilLabel:obj.oilLabel,
+                            invoice:obj.invoiceInfo||{}
+                        }}
+                    });
+                    notification.success({
+                        message:"信息提示",
+                        description:"车主注册信息查询成功!"
+                    });
+                },8000);
+            }else{
+                notification.warning({
+                    message:"信息提示",
+                    description:"车主未注册，请现场工作人员协助!"
+                });
+            }
         });
     },[]);
     // 处理展开、收缩操作
