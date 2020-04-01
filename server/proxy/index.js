@@ -1,0 +1,2 @@
+
+exports.UserInfo = require("./userInfo");
