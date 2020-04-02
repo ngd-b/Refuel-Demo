@@ -30,6 +30,8 @@ function MainPage(props){
     const [totalCost,setTotalCost] = useState({});
     // 开票信息
     const [billingInfo,setBillingInfo] = useState({});
+    // 是否继续，是否是注册车辆
+    const [isContinue,setIsContinue] = useState(true);
     // 初始化数据
     let timer = null;
     function delay(fn,duration=4000){
@@ -161,10 +163,13 @@ function MainPage(props){
                     });
                 },8000);
             }else{
-                notification.warning({
-                    message:"信息提示",
-                    description:"车主未注册，请现场工作人员协助!"
-                });
+                delay(()=>{
+                    setIsContinue(false);
+                    notification.warning({
+                        message:"信息提示",
+                        description:"车主未注册，请现场工作人员协助!"
+                    });
+                },8000);
             }
         });
     },[]);
@@ -211,7 +216,7 @@ function MainPage(props){
         {_.isEmpty(showCarInfo)?(
         <Row>
             <Col span={24}>
-                <Texty interval={300} style={{marginTop:100,textAlign:"center",fontSize:48}}>无感加油支付</Texty>
+                <Texty interval={300} style={{marginTop:100,textAlign:"center",fontSize:48}}>无感支付加油演示</Texty>
             </Col>
         </Row>):(
         <Row>
@@ -227,7 +232,7 @@ function MainPage(props){
                             <Flex.Item>车身颜色：</Flex.Item>
                             <Flex.Item>{showCarInfo.color}</Flex.Item>
                         </Flex>
-                        <div style={{display:_.isEmpty(showCarInfo)?"none":"block"}}>
+                        <div style={{display:_.isEmpty(showCarInfo)?"none":"block"}} style={{display:isContinue?"none":"block"}}>
                             {!_.isString(showCarInfo.name)?(<Spin tip="正在查询车辆注册信息" />):(<React.Fragment>
                                 <p>车辆注册信息</p>
                                 <Flex className="listInfo">

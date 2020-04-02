@@ -1,0 +1,2 @@
+
+exports.CacheCarInfo = require("./cacheCarInfo");
