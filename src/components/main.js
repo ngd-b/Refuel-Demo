@@ -135,6 +135,8 @@ function MainPage(props){
                     color:obj.carColor,
                     type:obj.carType
                 });
+                // 关闭所有窗口
+                notification.destroy();
                 notification.success({
                     message:"信息提示",
                     description:"来车信息识别成功!"
@@ -147,6 +149,7 @@ function MainPage(props){
             // 有注册信息
             if(obj.result){
                 obj = obj.data;
+                setIsContinue(true);
                 delay(()=>{
                     setShowCarInfo(preVal=>{
                         return {...preVal,...{
@@ -167,7 +170,8 @@ function MainPage(props){
                     setIsContinue(false);
                     notification.warning({
                         message:"信息提示",
-                        description:"车主未注册，请现场工作人员协助!"
+                        description:"车主未注册，请现场工作人员协助!",
+                        duration:0
                     });
                 },8000);
             }
@@ -232,7 +236,7 @@ function MainPage(props){
                             <Flex.Item>车身颜色：</Flex.Item>
                             <Flex.Item>{showCarInfo.color}</Flex.Item>
                         </Flex>
-                        <div style={{display:_.isEmpty(showCarInfo)?"none":"block"}} style={{display:isContinue?"none":"block"}}>
+                        <div style={{display:_.isEmpty(showCarInfo)||!isContinue?"none":"block"}}>
                             {!_.isString(showCarInfo.name)?(<Spin tip="正在查询车辆注册信息" />):(<React.Fragment>
                                 <p>车辆注册信息</p>
                                 <Flex className="listInfo">
