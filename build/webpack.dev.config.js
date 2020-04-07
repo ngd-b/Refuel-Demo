@@ -8,7 +8,16 @@ module.exports = merge(baseConfig,{
     devtool:'inline-source-map',
     mode:"development",
     devServer:{
-        port:"8080"
+        port:"8080",
+        proxy:[
+            {
+                context:['/test'],
+                target:"http://localhost:8080",
+                pathRewrite:{
+                    "^/test":""
+                }
+            }
+        ]
     },
     plugins:[
         new webpack.DefinePlugin({
