@@ -18,6 +18,7 @@ const routers = require("./router");
 require("./mock");
 // 测试数据库
 // const UserInfo = require("./proxy").UserInfo;
+// 静态指向资源目录，JS CSS等等 访问
 app.use(express.static('public'));
 // 模板引擎
 app.set('views',path.resolve(__dirname,'../public'));
