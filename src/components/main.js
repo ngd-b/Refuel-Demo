@@ -73,7 +73,7 @@ function MainPage(props){
                 invoiceHeader:"江苏金晓电子信息股份有限公司",
                 invoiceNumber:"9130200732453342",
                 invoiceContent:"加油服务费用",
-                invoiceAmount:refuelInfo.totalCost,
+                invoiceAmount:refuelInfo.totalCost+"元",
                 receiveWay:"admin@aliy.com"
             }:{
                 headerType:invoice.headerType,
@@ -133,7 +133,8 @@ function MainPage(props){
                 setShowCarInfo({
                     number:obj.carNum,
                     color:obj.carColor,
-                    type:obj.carType
+                    type:obj.carType,
+                    type_sr:obj.carType_str,
                 });
                 // 关闭所有窗口
                 notification.destroy();
@@ -235,6 +236,10 @@ function MainPage(props){
                         <Flex className="listInfo">
                             <Flex.Item>车身颜色：</Flex.Item>
                             <Flex.Item>{showCarInfo.color}</Flex.Item>
+                        </Flex>
+                        <Flex className="listInfo">
+                            <Flex.Item>类型：</Flex.Item>
+                            <Flex.Item>{showCarInfo.type_sr}</Flex.Item>
                         </Flex>
                         <div style={{display:_.isEmpty(showCarInfo)||!isContinue?"none":"block"}}>
                             {!_.isString(showCarInfo.name)?(<Spin tip="正在查询车辆注册信息" />):(<React.Fragment>

@@ -41,9 +41,10 @@ router.post("/getUserByCarInfo",function(req,res,next){
         is_oilcar = req.body.is_oilcar;
     // 原始的数据传输信息，车辆的识别信息
     let obj = {
-        carNum,
+        carNum:carNum.toUpperCase(),
         carType,
-        carColor
+        carColor,
+        carType_str:"小轿车"
     }
     // 每次都打印
     console.log(req.body);

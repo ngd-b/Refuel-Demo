@@ -2,13 +2,16 @@
 const models = require("../model");
 const UserInfo = models.UserInfo;
 
+const name = "admin";
+name.toUpperCase()
+console.log(name);
 // 首次注册信息
 exports.newAndSave = function(obj,callback){
     let user = new UserInfo();
 
     user.name = obj.name;
     user.mobile = obj.mobile;
-    user.carNum = obj.carNum;
+    user.carNum = obj.carNum.toUpperCase();
     user.carType = obj.carType;
     user.carColor = obj.carColor;
     user.oilLabel = obj.oilLabel;
@@ -31,11 +34,11 @@ exports.getUserById = function(id,callback){
 
 // 根据车辆信息获取注册用户信息
 exports.getUserByCarInfo = function(carInfo,callback){
-    if(!carInfo||!carInfo.carNum||!carInfo.carType){
+    if(!carInfo||!carInfo.carNum){
         return callback();
     }
     console.log({carNum:carInfo.carNum,carColor:carInfo.carColor,carType:carInfo.carType});
-    UserInfo.findOne({carNum:carInfo.carNum,carColor:carInfo.carColor,carType:carInfo.carType},callback);
+    UserInfo.findOne({carNum:carInfo.carNum},callback);
 }
 
 // 删除所有数据
